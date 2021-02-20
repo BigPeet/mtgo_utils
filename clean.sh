@@ -12,6 +12,10 @@ if [[ -d ./.clangd ]]; then
   rm -rf ./.clangd
 fi
 
+if [[ -d ./.cache ]]; then
+  rm -rf ./.cache
+fi
+
 if [[ -L compile_commands.json ]]; then
   rm compile_commands.json
 fi
