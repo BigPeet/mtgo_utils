@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <iostream>
 
 #include "gamelog/gamelog.h"
@@ -11,7 +12,12 @@ int main(int argc, char* const* argv)
         return 0;
     }
 
-    gl::Parse(argv[1]);
+    std::filesystem::path to_parse(argv[1]);
+    if (to_parse.extension() != ".dat")
+    {
+        std::cout << "Invalid extension: " << to_parse.extension() << "\n";
+    }
+    gl::Parse(to_parse.generic_u8string());
 
     return 0;
 }

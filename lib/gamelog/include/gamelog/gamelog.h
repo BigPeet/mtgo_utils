@@ -5,7 +5,7 @@
 
 namespace gl {
 
-  void Parse(std::string const& file_name);
+void Parse(std::string_view file_name);
 
 } // namespace gl
 
