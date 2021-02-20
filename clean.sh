@@ -8,6 +8,10 @@ if [[ -d ./install ]]; then
   rm -rf ./install
 fi
 
+if [[ -d ./.clangd ]]; then
+  rm -rf ./.clangd
+fi
+
 if [[ -L compile_commands.json ]]; then
   rm compile_commands.json
 fi
