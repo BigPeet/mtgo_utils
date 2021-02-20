@@ -1,6 +1,8 @@
 # mtgo_utils
 Tooling suite for Magic: The Gathering Online (MTGO)
 
+[![CMake](https://github.com/BigPeet/mtgo_utils/actions/workflows/cmake.yml/badge.svg)](https://github.com/BigPeet/mtgo_utils/actions/workflows/cmake.yml)
+
 # Features
 
 ## Game Log (WIP)
