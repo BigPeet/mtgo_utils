@@ -12,12 +12,13 @@ int main(int argc, char* const* argv)
         return 0;
     }
 
-    std::filesystem::path to_parse(argv[1]);
+    std::string file_name{argv[1]};
+    std::filesystem::path to_parse{file_name};
     if (to_parse.extension() != ".dat")
     {
         std::cout << "Invalid extension: " << to_parse.extension() << "\n";
     }
-    gl::Parse(to_parse.generic_u8string());
+    gl::Parse(file_name);
 
     return 0;
 }
