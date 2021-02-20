@@ -1,3 +1,9 @@
+# Misc
+*.swp
+compile_commands.json
+cscope.out
+**/build/*
+
 # Prerequisites
 *.d
 
