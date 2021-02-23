@@ -46,10 +46,12 @@ void CutOff(std::string& sentence)
 
 std::vector<std::string> Split(std::string const& content)
 {
+    static constexpr char const* sentinel = "@P";
+    static constexpr size_t sentinel_length{2};
+
     std::vector<std::string> tokens;
-    char const* sentinel = "@P";
-    size_t const sentinel_length{2};
     size_t pos{content.find(sentinel)};
+
     while (pos != std::string::npos)
     {
         std::string token;
