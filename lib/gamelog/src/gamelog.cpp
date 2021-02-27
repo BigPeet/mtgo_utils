@@ -3,6 +3,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include "gamelog/gamelog.h"
@@ -17,6 +18,10 @@ std::string Read(std::string_view file_name)
 
 void CutOff(std::string& sentence)
 {
+    // It seems every actual line in the game log is a sentence ending with a period "."
+    // Everything after the period can be discarded.
+    // But there might be "sub-sentences" in (), e.g. reminder text.
+    // These do not indicate a cut-off.
     int bracket_level{0};
     size_t end{sentence.length()};
 
@@ -59,7 +64,7 @@ std::vector<std::string> ExtractPlayerNames(std::vector<std::string> const& line
         auto const pos = line.find(" rolled a ");
         if (pos != std::string::npos)
         {
-            names.insert(line.substr(0, pos)); // emplace or insert?
+            names.insert(line.substr(0, pos));
         }
     }
     return std::vector<std::string>{names.cbegin(), names.cend()};
@@ -88,44 +93,52 @@ void CleanUpTurnLines(std::vector<std::string>& lines, std::vector<std::string> 
 
 std::vector<std::string> Split(std::string const& content)
 {
+    // This sentinel seems to be a good indicator for the start of a line.
     static constexpr char const* sentinel = "@P";
     static constexpr size_t sentinel_length{2};
 
-    std::vector<std::string> tokens;
+    std::vector<std::string> lines;
     size_t pos{content.find(sentinel)};
 
     while (pos != std::string::npos)
     {
-        std::string token;
+        // Initialize the next line from the current sentinel to the next.
+        // If there is none left, go until the end of the text.
+        std::string line;
         size_t const next_pos{content.find(sentinel, pos + sentinel_length)};
         if ((next_pos != std::string::npos) && ((pos + sentinel_length) < next_pos))
         {
-            token = content.substr(pos + sentinel_length, (next_pos - pos - sentinel_length + 1));
+            line = content.substr(pos + sentinel_length, (next_pos - pos - sentinel_length + 1));
         }
         else if (next_pos == std::string::npos)
         {
-            token = content.substr(pos + sentinel_length);
+            line = content.substr(pos + sentinel_length);
         }
 
-        if (token.length() > 0)
+        // Cut off the line based on punctuation to remove some of the encoding noise.
+        // Then add it to the return vector.
+        if (line.length() > 0)
         {
-            CutOff(token);
-            tokens.push_back(std::move(token));
+            CutOff(line);
+            lines.push_back(std::move(line));
         }
 
         pos = next_pos;
     }
-    CleanUpTurnLines(tokens, ExtractPlayerNames(tokens));
-    return tokens;
+
+    // Apply additional cut-off to "Turn X: " lines
+    CleanUpTurnLines(lines, ExtractPlayerNames(lines));
+
+    return lines;
 }
 
 void Parse(std::string_view file_name)
 {
-    auto const text   = Read(file_name);
-    auto const tokens = Split(text);
-    for (auto const& token : tokens)
+    auto const text  = Read(file_name);
+    auto const lines = Split(text);
+    for (auto const& line : lines)
     {
-        std::cout << "Token: " << token << "\n";
+        std::cout << line << "\n";
     }
 }
 
