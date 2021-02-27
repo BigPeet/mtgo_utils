@@ -110,7 +110,7 @@ std::vector<std::string> Split(std::string const& content)
         if (token.length() > 0)
         {
             CutOff(token);
-            tokens.push_back(token);
+            tokens.push_back(std::move(token));
         }
 
         pos = next_pos;
