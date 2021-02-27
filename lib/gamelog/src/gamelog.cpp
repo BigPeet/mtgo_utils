@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <unordered_set>
 #include <vector>
 
 #include "gamelog/gamelog.h"
@@ -44,6 +45,47 @@ void CutOff(std::string& sentence)
     sentence.erase(end);
 }
 
+
+std::vector<std::string> ExtractPlayerNames(std::vector<std::string> const& lines)
+{
+    // Assuming game log starts with
+    // Player A rolled N.
+    // Player B rolled J.
+    // Player C rolled K.
+    // ...
+    std::unordered_set<std::string> names;
+    for (auto const& line : lines)
+    {
+        auto const pos = line.find(" rolled a ");
+        if (pos != std::string::npos)
+        {
+            names.insert(line.substr(0, pos)); // emplace or insert?
+        }
+    }
+    return std::vector<std::string>{names.cbegin(), names.cend()};
+}
+
+void CleanUpTurnLines(std::vector<std::string>& lines, std::vector<std::string> const& players)
+{
+    for (auto& line : lines)
+    {
+        if (line.find("Turn ") == 0)
+        {
+            // starts with "Turn "
+            for (auto const& player : players)
+            {
+                auto const pos = line.find(player);
+                if (pos != std::string::npos)
+                {
+                    // It's that players turn, cut off line after the name
+                    line.erase(pos + player.length());
+                    break;
+                }
+            }
+        }
+    }
+}
+
 std::vector<std::string> Split(std::string const& content)
 {
     static constexpr char const* sentinel = "@P";
@@ -73,6 +115,7 @@ std::vector<std::string> Split(std::string const& content)
 
         pos = next_pos;
     }
+    CleanUpTurnLines(tokens, ExtractPlayerNames(tokens));
     return tokens;
 }
 
