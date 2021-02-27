@@ -10,3 +10,7 @@ Tooling suite for Magic: The Gathering Online (MTGO)
 * (WIP) Parsing game log files into human readable text.
 * (Future) Scanning game folder to easily browse log files and detect new ones.
 * (Future) Live parsing of game log files.
+* (Future) Create actual match data from the parsed game logs.
+    * who won
+    * which cards were played
+    * ...
