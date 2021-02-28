@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -10,11 +11,21 @@
 
 namespace gl {
 
-std::string Read(std::string_view file_name)
+namespace internal {
+
+
+std::string Read(std::ifstream&& file_stream)
 {
-    std::ifstream in{file_name.data()};
-    return {std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>()};
+    return {std::istreambuf_iterator<char>{file_stream}, std::istreambuf_iterator<char>()};
 }
+
+std::string Read(std::filesystem::path const& file_path)
+{
+    // std::ifstream in{file_path.data()};
+    // return Read(in);
+    return Read(std::ifstream(file_path));
+}
+
 
 void CutOff(std::string& sentence)
 {
@@ -132,14 +143,23 @@ std::vector<std::string> Split(std::string const& content)
     return lines;
 }
 
-void Parse(std::string_view file_name)
+} // namespace internal
+
+std::vector<std::string> ParseGameLogFile(std::filesystem::path const& file_path)
 {
-    auto const text  = Read(file_name);
-    auto const lines = Split(text);
-    for (auto const& line : lines)
-    {
-        std::cout << line << "\n";
-    }
+    auto const text = gl::internal::Read(file_path);
+    return ParseGameLogFile(text);
+}
+
+std::vector<std::string> ParseGameLogFile(std::ifstream&& file_stream)
+{
+    auto const text = gl::internal::Read(std::move(file_stream));
+    return ParseGameLogFile(text);
+}
+
+std::vector<std::string> ParseGameLogFile(std::string const& file_content)
+{
+    return gl::internal::Split(file_content);
 }
 
 } // namespace gl

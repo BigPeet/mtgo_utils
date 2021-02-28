@@ -1,11 +1,16 @@
 #ifndef GAMELOG_H_INCLUDE
 #define GAMELOG_H_INCLUDE
 
+#include <filesystem>
+#include <fstream>
 #include <string>
+#include <vector>
 
 namespace gl {
 
-void Parse(std::string_view file_name);
+std::vector<std::string> ParseGameLogFile(std::filesystem::path const& file_path);
+std::vector<std::string> ParseGameLogFile(std::ifstream&& file_stream);
+std::vector<std::string> ParseGameLogFile(std::string const& file_content);
 
 } // namespace gl
 

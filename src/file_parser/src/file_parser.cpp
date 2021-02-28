@@ -12,13 +12,17 @@ int main(int argc, char* const* argv)
         return 0;
     }
 
-    std::string file_name{argv[1]};
+    std::string file_name{argv[1]}; // NOLINT
     std::filesystem::path to_parse{file_name};
     if (to_parse.extension() != ".dat")
     {
         std::cout << "Invalid extension: " << to_parse.extension() << "\n";
     }
-    gl::Parse(file_name);
+    auto const lines = gl::ParseGameLogFile(to_parse);
+    for (auto const& line : lines)
+    {
+        std::cout << line << "\n";
+    }
 
     return 0;
 }
