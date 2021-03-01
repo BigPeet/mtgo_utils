@@ -116,18 +116,17 @@ int main(int argc, char* const* argv)
     }
 
     target /= "placeholder.dat"; // setup target for replacement ooperations
+    if (output_to_file)
+    {
+        // Create directories for output files.
+        if (!CreateDirectories(target.parent_path()))
+        {
+            return 1;
+        }
+    }
 
     if (std::filesystem::is_directory(file_name))
     {
-        if (output_to_file)
-        {
-            // Create directories for output files.
-            if (!CreateDirectories(target.parent_path()))
-            {
-                return 1;
-            }
-        }
-
         // Iterate through directory and parse all match game logs.
         for (auto const& file : std::filesystem::recursive_directory_iterator{file_name})
         {
@@ -155,11 +154,6 @@ int main(int argc, char* const* argv)
         }
         if (output_to_file)
         {
-            // Create directories for output file.
-            if (!CreateDirectories(target.parent_path()))
-            {
-                return 1;
-            }
             ParseFile(file_name,
                       target.replace_filename(file_name.filename()).replace_extension(".log"));
         }
