@@ -51,14 +51,10 @@ jobs:
     - name: Release
       shell: bash
       working-directory: ${{github.workspace}}
-      run: mkdir install # actually configure CMake to copy
-
-    - name: Compress Build Artifacts
-      shell: bash
-      working-directory: ${{github.workspace}}
-      run: tar -czf release.tar.gz install/
+      run: mkdir install && touch install/test # TODO: configure CMake to copy targets into local install directory
+      
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: ${{matrix.os}}_release
-        path: release.tar.gz
+        path: install/*
