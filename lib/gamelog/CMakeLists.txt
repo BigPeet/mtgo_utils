@@ -11,6 +11,13 @@ add_library(
   ${LOG_SOURCES}
 )
 
+set_target_properties(
+  ${LOG_LIB}
+  PROPERTIES
+  VERSION ${PROJECT_VERSION}
+  SOVERSION ${PROJECT_VERSION}
+)
+
 target_link_libraries(
   ${LOG_LIB}
   PRIVATE project_options
