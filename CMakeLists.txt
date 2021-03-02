@@ -8,6 +8,11 @@ include(cmake/PreventInSourceBuilds.cmake)
 # for correct library locations across platforms
 include(GNUInstallDirs)
 
+if(WIN32)
+  # Set this option so Windows will export all symbols from a .dll.
+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
+
 # Link this 'library' to set the c++ standard / compile-time options requested
 add_library(project_options INTERFACE)
 target_compile_features(project_options INTERFACE cxx_std_17)
