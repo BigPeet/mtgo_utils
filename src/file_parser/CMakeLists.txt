@@ -13,6 +13,8 @@ target_link_libraries(
           gamelog
 )
 
+analyse_with_iwyu(${FILE_PARSER})
+
 # Local install
 install(TARGETS ${FILE_PARSER}
   RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/install/bin

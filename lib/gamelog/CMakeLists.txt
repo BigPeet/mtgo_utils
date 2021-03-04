@@ -24,6 +24,8 @@ target_link_libraries(
           project_warnings
 )
 
+analyse_with_iwyu(${LOG_LIB})
+
 target_include_directories(
   ${LOG_LIB}
   PUBLIC
