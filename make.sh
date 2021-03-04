@@ -5,8 +5,8 @@ if [[ ! -d ./build ]]; then
 fi
 
 cd build
-cmake .. -DBUILD_TESTING=1 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo
-make
+cmake .. $@
+cmake --build .
 cd ..
 
 if [[ ! -f compile_commands.json ]]; then
