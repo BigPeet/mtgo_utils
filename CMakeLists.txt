@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(mtgo_utils VERSION 0.0.1)
+project(mtgo_utils VERSION 0.1.0)
 
 include(cmake/StandardProjectSettings.cmake)
 include(cmake/PreventInSourceBuilds.cmake)
