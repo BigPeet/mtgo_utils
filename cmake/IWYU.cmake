@@ -1,5 +1,5 @@
 # Setup IWYU
-find_program(IWYU_PATH NAMES include-what-you-use iwyu REQUIRED)
+find_program(IWYU_PATH NAMES include-what-you-use iwyu)
 if(NOT ${IWYU_PATH} STREQUAL "IWYU_PATH-NOTFOUND")
   set(IWYU_FOUND TRUE)
 else()
