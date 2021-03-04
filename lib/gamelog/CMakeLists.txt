@@ -5,6 +5,10 @@ set(LOG_SOURCES
   src/gamelog.cpp
 )
 
+set(LOG_HEADERS
+  include/gamelog/gamelog.h
+)
+
 add_library(
   ${LOG_LIB}
   SHARED
@@ -16,6 +20,7 @@ set_target_properties(
   PROPERTIES
   VERSION ${PROJECT_VERSION}
   SOVERSION ${PROJECT_VERSION}
+  PUBLIC_HEADER ${LOG_HEADERS}
 )
 
 target_link_libraries(
@@ -36,5 +41,5 @@ target_include_directories(
 # System install
 install(TARGETS ${LOG_LIB}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${LOG_LIB}
 )
