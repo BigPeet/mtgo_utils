@@ -4,6 +4,9 @@ if [[ ! -d ./build ]]; then
   mkdir build
 fi
 
+# Note:
+# Set CMAKE_PREFIX_PATH to find packages/programs, like IWYU.
+# Set CMAKE_INSTALL_PREFIX to change where targets are installed.
 cd build
 cmake .. $@
 cmake --build .
