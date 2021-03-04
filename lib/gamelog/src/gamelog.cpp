@@ -14,12 +14,12 @@ namespace gl {
 namespace internal {
 
 
-std::string Read(std::ifstream&& file_stream)
+static std::string Read(std::ifstream&& file_stream)
 {
     return {std::istreambuf_iterator<char>{file_stream}, std::istreambuf_iterator<char>()};
 }
 
-std::string Read(std::filesystem::path const& file_path)
+static std::string Read(std::filesystem::path const& file_path)
 {
     // std::ifstream in{file_path.data()};
     // return Read(in);
@@ -27,7 +27,7 @@ std::string Read(std::filesystem::path const& file_path)
 }
 
 
-void CutOff(std::string& sentence)
+static void CutOff(std::string& sentence)
 {
     // It seems every actual line in the game log is a sentence ending with a period "."
     // Everything after the period can be discarded.
@@ -62,7 +62,7 @@ void CutOff(std::string& sentence)
 }
 
 
-std::vector<std::string> ExtractPlayerNames(std::vector<std::string> const& lines)
+static std::vector<std::string> ExtractPlayerNames(std::vector<std::string> const& lines)
 {
     // Assuming game log starts with
     // Player A rolled N.
@@ -81,7 +81,7 @@ std::vector<std::string> ExtractPlayerNames(std::vector<std::string> const& line
     return std::vector<std::string>{names.cbegin(), names.cend()};
 }
 
-void CleanUpTurnLines(std::vector<std::string>& lines, std::vector<std::string> const& players)
+static void CleanUpTurnLines(std::vector<std::string>& lines, std::vector<std::string> const& players)
 {
     for (auto& line : lines)
     {
@@ -102,7 +102,7 @@ void CleanUpTurnLines(std::vector<std::string>& lines, std::vector<std::string> 
     }
 }
 
-std::vector<std::string> Split(std::string const& content)
+static std::vector<std::string> Split(std::string const& content)
 {
     // This sentinel seems to be a good indicator for the start of a line.
     static constexpr char const* sentinel = "@P";
