@@ -166,4 +166,11 @@ std::vector<std::string> ParseGameLogFile(std::string const& file_content)
     return gl::internal::Split(file_content);
 }
 
+
+bool IsMatchGameLog(std::filesystem::path const& file_path)
+{
+    return (file_path.extension() == ".dat") &&
+           (file_path.filename().string().find("Match_GameLog_") == 0);
+}
+
 } // namespace gl

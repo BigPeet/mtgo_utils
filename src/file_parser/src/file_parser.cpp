@@ -51,13 +51,6 @@ static void ParseFile(std::filesystem::path const& to_parse)
 }
 
 
-static bool IsMatchGameLog(std::filesystem::path const& file_path)
-{
-    return (file_path.extension() == ".dat") &&
-           (file_path.filename().string().find("Match_GameLog_") == 0);
-}
-
-
 static bool CreateDirectories(std::filesystem::path const& dir_path)
 {
     std::error_code dir_error;
@@ -131,7 +124,7 @@ int main(int argc, char* const* argv)
         // Iterate through directory and parse all match game logs.
         for (auto const& file : std::filesystem::recursive_directory_iterator{file_name})
         {
-            if ((std::filesystem::is_regular_file(file)) && (IsMatchGameLog(file)))
+            if ((std::filesystem::is_regular_file(file)) && (gl::IsMatchGameLog(file)))
             {
                 if (output_to_file)
                 {
@@ -148,7 +141,7 @@ int main(int argc, char* const* argv)
     else if (std::filesystem::is_regular_file(file_name))
     {
         // Parse given file (if it is a match game log).
-        if (!IsMatchGameLog(file_name))
+        if (!gl::IsMatchGameLog(file_name))
         {
             std::cerr << "Error: " << file_name << " is (likely) no MTGO match game log.\n";
             return 1;

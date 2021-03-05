@@ -29,6 +29,19 @@ std::vector<std::string> ParseGameLogFile(std::ifstream&& file_stream);
  */
 std::vector<std::string> ParseGameLogFile(std::string const& file_content);
 
+
+/**
+ * \brief Return true, if the given file path matches a match game log.
+ * \param file_path given file path
+ * \return true, if the file path matches.
+ *
+ * Checks if the file path has the correct extension (.dat) and
+ * if the file starts with Match_GameLog_.
+ * Does not check any file internals.
+ *
+ */
+bool IsMatchGameLog(std::filesystem::path const& file_path);
+
 } // namespace gl
 
 #endif /* ifndef GAMELOG_H_INCLUDE */
