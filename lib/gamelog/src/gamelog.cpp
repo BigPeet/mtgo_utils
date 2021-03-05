@@ -13,16 +13,14 @@ namespace gl {
 
 namespace internal {
 
-
 static std::string Read(std::ifstream&& file_stream)
 {
     return {std::istreambuf_iterator<char>{file_stream}, std::istreambuf_iterator<char>()};
 }
 
+
 static std::string Read(std::filesystem::path const& file_path)
 {
-    // std::ifstream in{file_path.data()};
-    // return Read(in);
     return Read(std::ifstream(file_path));
 }
 
@@ -81,7 +79,9 @@ static std::vector<std::string> ExtractPlayerNames(std::vector<std::string> cons
     return std::vector<std::string>{names.cbegin(), names.cend()};
 }
 
-static void CleanUpTurnLines(std::vector<std::string>& lines, std::vector<std::string> const& players)
+
+static void CleanUpTurnLines(std::vector<std::string>& lines,
+                             std::vector<std::string> const& players)
 {
     for (auto& line : lines)
     {
@@ -101,6 +101,7 @@ static void CleanUpTurnLines(std::vector<std::string>& lines, std::vector<std::s
         }
     }
 }
+
 
 static std::vector<std::string> Split(std::string const& content)
 {
@@ -145,17 +146,20 @@ static std::vector<std::string> Split(std::string const& content)
 
 } // namespace internal
 
+
 std::vector<std::string> ParseGameLogFile(std::filesystem::path const& file_path)
 {
     auto const text = gl::internal::Read(file_path);
     return ParseGameLogFile(text);
 }
 
+
 std::vector<std::string> ParseGameLogFile(std::ifstream&& file_stream)
 {
     auto const text = gl::internal::Read(std::move(file_stream));
     return ParseGameLogFile(text);
 }
+
 
 std::vector<std::string> ParseGameLogFile(std::string const& file_content)
 {
