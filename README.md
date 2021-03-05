@@ -11,7 +11,7 @@ Tooling suite for Magic: The Gathering Online (MTGO)
 * Parsing MTGO match game log files into human readable text.
     * The `file_parser` tool parses either a single Match\_GameLog\_\*.dat file or all of those files in a given directory.
     * The human readable content is either written to "stdout" or to a corresponding Match\_GameLog\_\*.log file.
-    * For more information, read the information provided by running `file_parser --help`.
+    * For more information, read the instructions provided by running `file_parser --help`.
 
 # Installation
 
@@ -57,9 +57,11 @@ On Linux the installation directory can be added to the LD\_LIBRARY\_PATH.
     * [x] Provide an API parsing a file (path, ifstream, raw text) and returning the parsed lines.
     * [x] Provide an (CLI) executable which takes an input file, parses it and writes the output either to stdout or into a provided output file.
     * [x] Provide documentation on how to install/use.
+* (Future) Extract actual match data from the parsed game logs.
+    * who won/lost (or is it still running => if yes what game of the match)
+    * which cards were played
+    * Game ID, Player Names
+    * ...
+    * Store this data somehow
 * (Future) Scanning game folder to easily browse log files and detect new ones.
 * (Future) Live parsing of game log files.
-* (Future) Create actual match data from the parsed game logs.
-    * who won
-    * which cards were played
-    * ...
