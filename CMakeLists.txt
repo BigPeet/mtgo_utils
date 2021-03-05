@@ -37,7 +37,15 @@ include(cmake/Cache.cmake)
 include(cmake/CompilerWarnings.cmake)
 set_project_warnings(project_warnings)
 
+# sanitizer options if supported by compiler
+include(cmake/Sanitizers.cmake)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  message(STATUS "Enable Address and UB sanitizers for debug build.")
+  set(ENABLE_SANITIZER_ADDRESS TRUE)
+  set(ENABLE_SANITIZER_UNDEFINED_BEHAVIOR TRUE)
+endif()
+enable_sanitizers(project_options)
 
-
+# Add source code directories
 add_subdirectory(lib)
 add_subdirectory(src)
