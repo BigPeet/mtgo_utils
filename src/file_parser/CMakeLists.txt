@@ -20,6 +20,10 @@ install(TARGETS ${FILE_PARSER}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
+
+# Find Bash for potential bash scripts
+find_program(BASH_PROGRAM bash)
+
 # Add some bash tests for the executable
 if(BASH_PROGRAM)
   add_test(${FILE_PARSER}_test_no_arguments
