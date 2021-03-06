@@ -46,6 +46,17 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 enable_sanitizers(project_options)
 
+# Find Bash for potential bash scripts
+find_program(BASH_PROGRAM bash)
+
+# Enable / Disable Testing
+if(NOT ENABLE_TESTING)
+  set(ENABLE_TESTING OFF)
+endif()
+if(ENABLE_TESTING)
+  enable_testing()
+endif()
+
 # Add source code directories
 add_subdirectory(lib)
 add_subdirectory(src)
