@@ -42,7 +42,6 @@ static void ParseFile(std::filesystem::path const& to_parse, std::filesystem::pa
 
 static void ParseFile(std::filesystem::path const& to_parse)
 {
-    std::cout << "Parsing " << to_parse.filename() << ":\n";
     auto const lines = gl::ParseGameLogFile(to_parse);
     for (auto const& line : lines)
     {
