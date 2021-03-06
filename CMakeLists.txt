@@ -51,6 +51,7 @@ if(NOT ENABLE_TESTING)
   set(ENABLE_TESTING OFF)
 endif()
 if(ENABLE_TESTING)
+  message(STATUS "Enable testing.")
   enable_testing()
 endif()
 

@@ -25,7 +25,7 @@ install(TARGETS ${FILE_PARSER}
 find_program(BASH_PROGRAM bash)
 
 # Add some bash tests for the executable
-if(BASH_PROGRAM)
+if(ENABLE_TESTING AND BASH_PROGRAM)
   add_test(${FILE_PARSER}_test_no_arguments
            ${BASH_PROGRAM} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_no_arguments.sh
   )
