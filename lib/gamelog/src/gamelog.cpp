@@ -25,6 +25,14 @@ static std::string Read(std::filesystem::path const& file_path)
 }
 
 
+constexpr static bool IsPrintableASCII(char c)
+{
+    constexpr char kMinAscii{31};
+    constexpr char kMaxAscii{127};
+    return (c > kMinAscii) && (c < kMaxAscii);
+}
+
+
 static void CutOff(std::string& sentence)
 {
     // It seems every actual line in the game log is a sentence ending with a period "."
@@ -32,9 +40,11 @@ static void CutOff(std::string& sentence)
     // But there might be "sub-sentences" in (), e.g. reminder text.
     // These do not indicate a cut-off.
     int bracket_level{0};
-    size_t end{sentence.length()};
+    auto const len{sentence.length()};
+    auto end{std::string::npos};
+    auto potential_end{std::string::npos};
 
-    for (size_t i{0}; i < sentence.length(); i++)
+    for (size_t i{0}; i < len; i++)
     {
         char cur{sentence[i]};
         if (cur == '(')
@@ -52,11 +62,34 @@ static void CutOff(std::string& sentence)
         }
         else if ((cur == '.') && (bracket_level == 0))
         {
-            end = i + 1;
-            break;
+            // We found the end of the sentence, but there might be another 'sentence' in this line.
+            // This is sometimes the case to specify a value for X.
+            // E.g., "Player activates an ability of Blast Zone. (X is 2) ( ... )."
+            if (((i + 2) < len) && (sentence[i + 1] == ' ') && (IsPrintableASCII(sentence[i + 2])))
+            {
+                // Looks like another sentence is contained. But mark this as a potential cut off.
+                potential_end = i + 1;
+            }
+            else
+            {
+                // Definitive cut off point. Invalidate other potential ends.
+                potential_end = std::string::npos;
+                end           = i + 1;
+                break;
+            }
         }
     }
-    sentence.erase(end);
+
+    // Did we find a defintive end? => erase remainder.
+    if (end != std::string::npos)
+    {
+        sentence.erase(end);
+    }
+    // Did we at least find a potential end? => erase remainder.
+    else if (potential_end != std::string::npos)
+    {
+        sentence.erase(potential_end);
+    }
 }
 
 
