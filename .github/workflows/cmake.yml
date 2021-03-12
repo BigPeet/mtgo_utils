@@ -1,6 +1,12 @@
 name: CMake
 
-on: [push]
+on:
+  push:
+    - master
+  pull_request:
+    - master
+  release:
+    types: [published, created, edited]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
