@@ -2,9 +2,11 @@ name: CMake
 
 on:
   push:
-    - master
+    branches:
+      - master
   pull_request:
-    - master
+    branches:
+      - master
   release:
     types: [published, created, edited]
 
