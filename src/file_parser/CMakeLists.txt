@@ -44,4 +44,7 @@ if(ENABLE_TESTING AND BASH_PROGRAM)
   add_test(${FILE_PARSER}_test_matchgamelog_03
            ${BASH_PROGRAM} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_matchgamelog_03.sh
   )
+  add_test(${FILE_PARSER}_test_matchgamelog_04
+           ${BASH_PROGRAM} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_matchgamelog_04.sh
+  )
 endif()
