@@ -63,5 +63,5 @@ On Linux the installation directory can be added to the LD\_LIBRARY\_PATH.
     * Game ID, Player Names
     * ...
     * Store this data somehow
-* (Future) Scanning game folder to easily browse log files and detect new ones.
+* (Future) Finding and scanning game folder to easily browse log files and detect new ones.
 * (Future) Live parsing of game log files.
