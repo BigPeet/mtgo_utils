@@ -38,4 +38,7 @@ if(ENABLE_TESTING AND BASH_PROGRAM)
   add_test(${FILE_PARSER}_test_matchgamelog_01
            ${BASH_PROGRAM} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_matchgamelog_01.sh
   )
+  add_test(${FILE_PARSER}_test_matchgamelog_02
+           ${BASH_PROGRAM} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_matchgamelog_02.sh
+  )
 endif()
