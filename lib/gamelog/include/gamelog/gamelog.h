@@ -1,5 +1,5 @@
-#ifndef GAMELOG_H_INCLUDE
-#define GAMELOG_H_INCLUDE
+#ifndef MTGO_UTILS_LIB_GAMELOG_INCLUDE_GAMELOG_H
+#define MTGO_UTILS_LIB_GAMELOG_INCLUDE_GAMELOG_H
 
 #include <filesystem>
 #include <fstream>
@@ -44,4 +44,4 @@ bool IsMatchGameLog(std::filesystem::path const& file_path);
 
 } // namespace gl
 
-#endif /* ifndef GAMELOG_H_INCLUDE */
+#endif /* ifndef MTGO_UTILS_LIB_GAMELOG_INCLUDE_GAMELOG_H */
