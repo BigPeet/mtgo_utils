@@ -68,8 +68,8 @@ if (ENABLE_TESTING)
     )
 
     add_test(
-      ${LOG_LIB}-test
-      ${LOG_LIB}-test
+      NAME ${LOG_LIB}-test
+      COMMAND ${LOG_LIB}-test
     )
 
     install(

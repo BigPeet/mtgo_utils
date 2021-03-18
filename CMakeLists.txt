@@ -58,6 +58,9 @@ if(ENABLE_TESTING)
   find_package(GTest QUIET)
   if (TARGET GTest::GTest)
     message(STATUS "Found GTest.")
+    # Prevent overriding the parent project's compiler/linker
+    # settings on Windows
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
   endif()
 
 endif()
