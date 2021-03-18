@@ -42,7 +42,6 @@ static void CutOff(std::string& sentence)
     int bracket_level{0};
     auto const len{sentence.length()};
     auto end{std::string::npos};
-    auto potential_end{std::string::npos};
 
     for (size_t i{0}; i < len; i++)
     {
@@ -65,30 +64,21 @@ static void CutOff(std::string& sentence)
             // We found the end of the sentence, but there might be another 'sentence' in this line.
             // This is sometimes the case to specify a value for X.
             // E.g., "Player activates an ability of Blast Zone. (X is 2) ( ... )."
-            if (((i + 2) < len) && (sentence[i + 1] == ' ') && (IsPrintableASCII(sentence[i + 2])))
+            end = i + 1;
+
+            // Check if another sentence might be follow.
+            if (((i + 2) > len) || (sentence[i + 1] != ' ') || (!IsPrintableASCII(sentence[i + 2])))
             {
-                // Looks like another sentence is contained. But mark this as a potential cut off.
-                potential_end = i + 1;
-            }
-            else
-            {
-                // Definitive cut off point. Invalidate other potential ends.
-                potential_end = std::string::npos;
-                end           = i + 1;
+                // Definitive cut off point.
                 break;
             }
         }
     }
 
-    // Did we find a defintive end? => erase remainder.
+    // Did we find an end? => erase remainder.
     if (end != std::string::npos)
     {
         sentence.erase(end);
-    }
-    // Did we at least find a potential end? => erase remainder.
-    else if (potential_end != std::string::npos)
-    {
-        sentence.erase(potential_end);
     }
 }
 
