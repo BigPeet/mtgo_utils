@@ -13,6 +13,8 @@ Tooling suite for Magic: The Gathering Online (MTGO)
     * The human readable content is either written to "stdout" or to a corresponding Match\_GameLog\_\*.log file.
     * For more information, read the instructions provided by running `file_parser --help`.
 
+THIS IS A TEST.
+
 # Installation
 
 ## Using pre-built binaries
