@@ -53,16 +53,9 @@ endif()
 if(ENABLE_TESTING)
   message(STATUS "Enable testing.")
   enable_testing()
-
-  # Find gtest
-  find_package(GTest QUIET)
-  if (TARGET GTest::GTest)
-    message(STATUS "Found GTest.")
-    # Prevent overriding the parent project's compiler/linker
-    # settings on Windows
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-  endif()
-
+  message(STATUS "#################### Importing GTest. ####################")
+  include(cmake/GoogleTest.cmake)
+  message(STATUS "############### Finished Importing GTest. ################")
 endif()
 
 # Add source code directories
