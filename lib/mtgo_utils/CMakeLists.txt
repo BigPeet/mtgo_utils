@@ -1,64 +1,64 @@
-# Gamelog Library
-set(LOG_LIB gamelog)
+# mtgo_utils Library
+set(LIB_NAME mtgo_utils)
 
-set(LOG_SOURCES
+set(LIB_SOURCES
   src/gamelog.cpp
 )
 
-set(LOG_HEADERS
+set(LIB_HEADERS
   include/gamelog/gamelog.h
 )
 
-set(LOG_TESTS
+set(LIB_TESTS
   tests/test_main.cpp
   tests/test_gamelog.cpp
 )
 
 add_library(
-  ${LOG_LIB}
+  ${LIB_NAME}
   SHARED
-  ${LOG_SOURCES}
+  ${LIB_SOURCES}
 )
 
 set_target_properties(
-  ${LOG_LIB}
+  ${LIB_NAME}
   PROPERTIES
   VERSION ${PROJECT_VERSION}
   SOVERSION ${PROJECT_VERSION}
-  PUBLIC_HEADER ${LOG_HEADERS}
+  PUBLIC_HEADER ${LIB_HEADERS}
 )
 
 target_link_libraries(
-  ${LOG_LIB}
+  ${LIB_NAME}
   PRIVATE project_options
           project_warnings
 )
 
-analyse_with_iwyu(${LOG_LIB})
+analyse_with_iwyu(${LIB_NAME})
 
 target_include_directories(
-  ${LOG_LIB}
+  ${LIB_NAME}
   PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
 
 # System install
-install(TARGETS ${LOG_LIB}
+install(TARGETS ${LIB_NAME}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${LOG_LIB}
+  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${LIB_NAME}
 )
 
 # Unit Tests
 if (ENABLE_TESTING)
   add_executable(
-    ${LOG_LIB}-test
-    ${LOG_TESTS}
+    ${LIB_NAME}-test
+    ${LIB_TESTS}
   )
   target_link_libraries(
-    ${LOG_LIB}-test
+    ${LIB_NAME}-test
     PRIVATE
-      ${LOG_LIB}
+      ${LIB_NAME}
       gtest
       gtest_main
       project_options
@@ -66,12 +66,12 @@ if (ENABLE_TESTING)
   )
 
   add_test(
-    NAME ${LOG_LIB}-test
-    COMMAND ${LOG_LIB}-test
+    NAME ${LIB_NAME}-test
+    COMMAND ${LIB_NAME}-test
   )
 
   install(
-    TARGETS ${LOG_LIB}-test
+    TARGETS ${LIB_NAME}-test
     RUNTIME DESTINATION build
   )
 endif()

@@ -1,1 +1,1 @@
-add_subdirectory(gamelog)
+add_subdirectory(mtgo_utils)

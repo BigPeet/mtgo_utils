@@ -3,6 +3,7 @@
 compile_commands.json
 cscope.out
 **/build/*
+**/install/*
 
 # VSCode
 .vscode/*

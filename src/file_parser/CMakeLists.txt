@@ -10,7 +10,7 @@ target_link_libraries(
   ${FILE_PARSER}
   PRIVATE project_options
           project_warnings
-          gamelog
+          mtgo_utils
 )
 
 analyse_with_iwyu(${FILE_PARSER})
