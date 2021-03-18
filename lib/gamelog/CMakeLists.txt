@@ -51,7 +51,14 @@ install(TARGETS ${LOG_LIB}
 
 # Unit Tests
 if (ENABLE_TESTING)
+
+  # Find gtest
   find_package(GTest QUIET)
+  if (WIN32)
+    target_link_directories(GTest::Gtest "D:/gtest/lib")
+    target_include_directories(GTest::Gtest "D:/gtest/include")
+  endif()
+
   # only build when modern target exists
   if (TARGET GTest::GTest)
     add_executable(
