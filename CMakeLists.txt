@@ -53,6 +53,13 @@ endif()
 if(ENABLE_TESTING)
   message(STATUS "Enable testing.")
   enable_testing()
+
+  # Find gtest
+  find_package(GTest QUIET)
+  if (TARGET GTest::GTest)
+    message(STATUS "Found GTest.")
+  endif()
+
 endif()
 
 # Add source code directories
