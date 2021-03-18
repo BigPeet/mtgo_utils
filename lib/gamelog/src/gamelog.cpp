@@ -66,7 +66,7 @@ static void CutOff(std::string& sentence)
             // E.g., "Player activates an ability of Blast Zone. (X is 2) ( ... )."
             end = i + 1;
 
-            // Check if another sentence might be follow.
+            // Check if another sentence might be following.
             if (((i + 2) > len) || (sentence[i + 1] != ' ') || (!IsPrintableASCII(sentence[i + 2])))
             {
                 // Definitive cut off point.
