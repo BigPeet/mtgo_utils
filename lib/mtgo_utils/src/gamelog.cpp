@@ -9,7 +9,7 @@
 
 #include "mtgo_utils/gamelog.h"
 
-namespace gl {
+namespace mtgo_utils {
 
 namespace internal {
 
@@ -172,21 +172,21 @@ static std::vector<std::string> Split(std::string const& content)
 
 std::vector<std::string> ParseGameLogFile(std::filesystem::path const& file_path)
 {
-    auto const text = gl::internal::Read(file_path);
+    auto const text = mtgo_utils::internal::Read(file_path);
     return ParseGameLogFile(text);
 }
 
 
 std::vector<std::string> ParseGameLogFile(std::ifstream&& file_stream)
 {
-    auto const text = gl::internal::Read(std::move(file_stream));
+    auto const text = mtgo_utils::internal::Read(std::move(file_stream));
     return ParseGameLogFile(text);
 }
 
 
 std::vector<std::string> ParseGameLogFile(std::string const& file_content)
 {
-    return gl::internal::Split(file_content);
+    return mtgo_utils::internal::Split(file_content);
 }
 
 
@@ -196,4 +196,4 @@ bool IsMatchGameLog(std::filesystem::path const& file_path)
            (file_path.filename().string().find("Match_GameLog_") == 0);
 }
 
-} // namespace gl
+} // namespace mtgo_utils

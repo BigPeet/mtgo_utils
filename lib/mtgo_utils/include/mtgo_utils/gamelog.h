@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace gl {
+namespace mtgo_utils {
 
 /**
  * \brief Take the given input file, parse its content and return the parsed lines.
@@ -42,6 +42,6 @@ std::vector<std::string> ParseGameLogFile(std::string const& file_content);
  */
 bool IsMatchGameLog(std::filesystem::path const& file_path);
 
-} // namespace gl
+} // namespace mtgo_utils
 
 #endif /* ifndef LIB_MTGO_UTILS_INCLUDE_MTGO_UTILS_GAMELOG_H */
