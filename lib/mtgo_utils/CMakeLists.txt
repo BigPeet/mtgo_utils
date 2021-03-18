@@ -6,7 +6,7 @@ set(LIB_SOURCES
 )
 
 set(LIB_HEADERS
-  include/gamelog/gamelog.h
+  include/mtgo_utils/gamelog.h
 )
 
 set(LIB_TESTS

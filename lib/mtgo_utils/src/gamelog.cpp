@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-#include "gamelog/gamelog.h"
+#include "mtgo_utils/gamelog.h"
 
 namespace gl {
 

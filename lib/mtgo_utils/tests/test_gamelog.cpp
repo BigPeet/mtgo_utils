@@ -1,7 +1,7 @@
 #include <filesystem>
 #include "gtest/gtest.h"
 
-#include "gamelog/gamelog.h"
+#include "mtgo_utils/gamelog.h"
 
 class GameLogTest : public ::testing::Test
 {
