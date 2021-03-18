@@ -9,6 +9,11 @@ set(LOG_HEADERS
   include/gamelog/gamelog.h
 )
 
+set(LOG_TESTS
+  tests/test_main.cpp
+  tests/test_gamelog.cpp
+)
+
 add_library(
   ${LOG_LIB}
   SHARED
@@ -43,3 +48,30 @@ install(TARGETS ${LOG_LIB}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${LOG_LIB}
 )
+
+# Unit Tests
+if (ENABLE_TESTING)
+  add_executable(
+    ${LOG_LIB}-test
+    ${LOG_TESTS}
+  )
+  target_link_libraries(
+    ${LOG_LIB}-test
+    PRIVATE
+      ${LOG_LIB}
+      gtest
+      gtest_main
+      project_options
+      project_warnings
+  )
+
+  add_test(
+    NAME ${LOG_LIB}-test
+    COMMAND ${LOG_LIB}-test
+  )
+
+  install(
+    TARGETS ${LOG_LIB}-test
+    RUNTIME DESTINATION build
+  )
+endif()

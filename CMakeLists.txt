@@ -53,6 +53,9 @@ endif()
 if(ENABLE_TESTING)
   message(STATUS "Enable testing.")
   enable_testing()
+  message(STATUS "#################### Importing GTest. ####################")
+  include(cmake/GoogleTest.cmake)
+  message(STATUS "############### Finished Importing GTest. ################")
 endif()
 
 # Add source code directories
