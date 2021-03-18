@@ -5,7 +5,7 @@
 #include <system_error>
 #include <vector>
 
-#include "gamelog/gamelog.h"
+#include "mtgo_utils/gamelog.h"
 
 static void show_usage(std::string const& exec_name)
 {
