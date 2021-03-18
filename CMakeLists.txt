@@ -8,8 +8,6 @@ include(cmake/PreventInSourceBuilds.cmake)
 # for correct library locations across platforms
 include(GNUInstallDirs)
 
-# just a test
-
 if(WIN32)
   # Set this option so Windows will export all symbols from a .dll.
   set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
