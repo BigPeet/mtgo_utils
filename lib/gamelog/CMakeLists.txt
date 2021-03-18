@@ -54,10 +54,17 @@ if (ENABLE_TESTING)
 
   # Find gtest
   find_package(GTest QUIET)
-  if (WIN32)
-    target_link_directories(GTest::Gtest "D:/gtest/lib")
-    target_include_directories(GTest::Gtest "D:/gtest/include")
-  endif()
+
+  # Configure paths correctly when using Windows & Github actions.
+  if (DEFINED ENV{GITHUB_ACTIONS})
+    if (WIN32)
+      link_directories("D:/gtest/lib")
+      include_directories("D:/gtest/include")
+
+      set(CMAKE_CXX_FLAGS_RELEASE "/MT")
+      set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+    endif ()
+  endif ()
 
   # only build when modern target exists
   if (TARGET GTest::GTest)
