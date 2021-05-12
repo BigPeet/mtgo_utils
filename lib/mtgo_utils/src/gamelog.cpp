@@ -1,7 +1,9 @@
+#include <algorithm>
 #include <cstddef>
 #include <filesystem>
 #include <fstream>
 #include <iterator>
+#include <optional>
 #include <string>
 #include <unordered_set>
 #include <utility>
@@ -194,6 +196,35 @@ bool IsMatchGameLog(std::filesystem::path const& file_path)
 {
     return (file_path.extension() == ".dat") &&
            (file_path.filename().string().find("Match_GameLog_") == 0);
+}
+
+
+std::optional<std::filesystem::path> FindMTGORoot(std::filesystem::path const& root_dir)
+{
+    std::optional<std::filesystem::path> res{};
+    if (std::filesystem::is_directory(root_dir))
+    {
+        std::filesystem::path users_dir{root_dir / "Users"};
+        if (!std::filesystem::is_directory(users_dir))
+        {
+            users_dir.replace_filename("users");
+        }
+        if (std::filesystem::is_directory(users_dir))
+        {
+            // check if path exists in user directory
+            std::filesystem::path const install_dir{"AppData/Local/Apps/2.0"};
+            for (auto const& user_dir : std::filesystem::directory_iterator(users_dir))
+            {
+                std::filesystem::path complete_path{user_dir.path() / install_dir};
+                if (std::filesystem::is_directory(complete_path))
+                {
+                    res.emplace(std::move(complete_path));
+                    break;
+                }
+            }
+        }
+    }
+    return res;
 }
 
 } // namespace mtgo_utils

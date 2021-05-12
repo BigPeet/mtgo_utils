@@ -3,6 +3,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -41,6 +42,20 @@ std::vector<std::string> ParseGameLogFile(std::string const& file_content);
  *
  */
 bool IsMatchGameLog(std::filesystem::path const& file_path);
+
+/**
+ * \brief Return file path of the MTGO installation, if it exists.
+ * \param root_dir the root directory (e.g. C:\)
+ * \return optional which contains the installation path on success.
+ *
+ * Searches for the MTGO installation folder under the given root directory.
+ * It is expected under Windows that the given root_dir is a drive, e.g. C:\, and contains the
+ * 'Users' directory. Under wine this might be 'users'.
+ * If the given path is not a existing directory or the installation can not be found, then no value
+ * will be returned.
+ *
+ */
+std::optional<std::filesystem::path> FindMTGORoot(std::filesystem::path const& root_dir);
 
 } // namespace mtgo_utils
 
