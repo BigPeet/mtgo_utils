@@ -57,11 +57,13 @@ On Linux the installation directory can be added to the LD\_LIBRARY\_PATH.
     * [x] Provide an API parsing a file (path, ifstream, raw text) and returning the parsed lines.
     * [x] Provide an (CLI) executable which takes an input file, parses it and writes the output either to stdout or into a provided output file.
     * [x] Provide documentation on how to install/use.
+* Finding and scanning game folder to easily browse log files and detect new ones.
+    * [x] Provide an API to find the MTGO installation folder.
+    * [ ] Provide an API to find and filter (time stamp, location) game logs inside an installation folder.
+* (Future) Live parsing of game log files.
 * (Future) Extract actual match data from the parsed game logs.
     * who won/lost (or is it still running => if yes what game of the match)
     * which cards were played
     * Game ID, Player Names
     * ...
     * Store this data somehow
-* (Future) Finding and scanning game folder to easily browse log files and detect new ones.
-* (Future) Live parsing of game log files.
