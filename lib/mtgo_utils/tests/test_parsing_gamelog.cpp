@@ -3,7 +3,7 @@
 
 #include "mtgo_utils/gamelog.h"
 
-class GameLogTest : public ::testing::Test
+class GameLogParserTest : public ::testing::Test
 {
   public:
     constexpr static char const* m_sentinel{"@P"};
@@ -15,38 +15,14 @@ class GameLogTest : public ::testing::Test
 };
 
 
-TEST_F(GameLogTest, IsMatchGameLog_Valid) // NOLINT
-{
-    std::filesystem::path const valid_01{"Match_GameLog_1234.dat"};
-    std::filesystem::path const valid_02{"/some/path/Match_GameLog_1234.dat"};
-
-    ASSERT_TRUE(mtgo_utils::IsMatchGameLog(valid_01));
-    ASSERT_TRUE(mtgo_utils::IsMatchGameLog(valid_02));
-}
-
-
-TEST_F(GameLogTest, IsMatchGameLog_Invalid) // NOLINT
-{
-    std::filesystem::path const invalid_01{"Match_GameLog_1234.txt"};
-    std::filesystem::path const invalid_02{"Match_GameLog_1234.log"};
-    std::filesystem::path const invalid_03{"MyGamelog.dat"};
-    std::filesystem::path const invalid_04{"Match_GameChat_1234.dat"};
-
-    ASSERT_FALSE(mtgo_utils::IsMatchGameLog(invalid_01));
-    ASSERT_FALSE(mtgo_utils::IsMatchGameLog(invalid_02));
-    ASSERT_FALSE(mtgo_utils::IsMatchGameLog(invalid_03));
-    ASSERT_FALSE(mtgo_utils::IsMatchGameLog(invalid_04));
-}
-
-
-TEST_F(GameLogTest, ParseGameLogFileStr_Empty_01) // NOLINT
+TEST_F(GameLogParserTest, ParseGameLogFileStr_Empty_01) // NOLINT
 {
     std::vector<std::string> expected{};
     ASSERT_EQ(mtgo_utils::ParseGameLogFile(std::string{}), expected);
 }
 
 
-TEST_F(GameLogTest, ParseGameLogFileStr_Empty_02) // NOLINT
+TEST_F(GameLogParserTest, ParseGameLogFileStr_Empty_02) // NOLINT
 {
     std::string content{"Here is some nonsense.\nNo sentinel characters included."};
     std::vector<std::string> expected{};
@@ -54,7 +30,7 @@ TEST_F(GameLogTest, ParseGameLogFileStr_Empty_02) // NOLINT
 }
 
 
-TEST_F(GameLogTest, ParseGameLogFileStr_Sentinel_01) // NOLINT
+TEST_F(GameLogParserTest, ParseGameLogFileStr_Sentinel_01) // NOLINT
 {
     std::string s1{"Here is some text with just a"};
     std::string s2{" single sentinel character."};
@@ -64,7 +40,7 @@ TEST_F(GameLogTest, ParseGameLogFileStr_Sentinel_01) // NOLINT
 }
 
 
-TEST_F(GameLogTest, ParseGameLogFileStr_Sentinel_02) // NOLINT
+TEST_F(GameLogParserTest, ParseGameLogFileStr_Sentinel_02) // NOLINT
 {
     std::string s1{"Here is some text with "};
     std::string s2{"multiple sentinel characters."};
@@ -75,7 +51,7 @@ TEST_F(GameLogTest, ParseGameLogFileStr_Sentinel_02) // NOLINT
 }
 
 
-TEST_F(GameLogTest, ParseGameLogFileStr_Sentinel_03) // NOLINT
+TEST_F(GameLogParserTest, ParseGameLogFileStr_Sentinel_03) // NOLINT
 {
     std::string s1{"Here is some text with "};
     std::string s2{"multiple sentinel characters in a row."};
@@ -86,7 +62,7 @@ TEST_F(GameLogTest, ParseGameLogFileStr_Sentinel_03) // NOLINT
 }
 
 
-TEST_F(GameLogTest, ParseGameLogFileStr_CutOff_01) // NOLINT
+TEST_F(GameLogParserTest, ParseGameLogFileStr_CutOff_01) // NOLINT
 {
     std::string s1{"Here is some text with "};
     std::string s2{"multiple sentinel characters."};
@@ -98,7 +74,7 @@ TEST_F(GameLogTest, ParseGameLogFileStr_CutOff_01) // NOLINT
 }
 
 
-TEST_F(GameLogTest, ParseGameLogFileStr_CutOff_02) // NOLINT
+TEST_F(GameLogParserTest, ParseGameLogFileStr_CutOff_02) // NOLINT
 {
     std::string s1{"Here is some text with "};
     std::string s2{"a single sentinel character but an additional sentence. Another sentence."};
@@ -108,7 +84,7 @@ TEST_F(GameLogTest, ParseGameLogFileStr_CutOff_02) // NOLINT
 }
 
 
-TEST_F(GameLogTest, ParseGameLogFileStr_CutOff_03) // NOLINT
+TEST_F(GameLogParserTest, ParseGameLogFileStr_CutOff_03) // NOLINT
 {
     std::string s1{"Here is some text with "};
     std::string s2{"a single sentinel character and a linebreak."};
@@ -119,7 +95,7 @@ TEST_F(GameLogTest, ParseGameLogFileStr_CutOff_03) // NOLINT
 }
 
 
-TEST_F(GameLogTest, ParseGameLogFileStr_CutOff_04) // NOLINT
+TEST_F(GameLogParserTest, ParseGameLogFileStr_CutOff_04) // NOLINT
 {
     std::string prefix1{"Player1 rolled a 2."};
     std::string prefix2{"Player2 rolled a 4."};
@@ -133,7 +109,7 @@ TEST_F(GameLogTest, ParseGameLogFileStr_CutOff_04) // NOLINT
 }
 
 
-TEST_F(GameLogTest, ParseGameLogFileStr_CutOff_05) // NOLINT
+TEST_F(GameLogParserTest, ParseGameLogFileStr_CutOff_05) // NOLINT
 {
     std::string s1{"Here is some text with "};
     std::string s2{"a single sentinel character (and some reminder text example...)."};

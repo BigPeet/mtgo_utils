@@ -11,7 +11,8 @@ set(LIB_HEADERS
 
 set(LIB_TESTS
   tests/test_main.cpp
-  tests/test_gamelog.cpp
+  tests/test_path_gamelog.cpp
+  tests/test_parsing_gamelog.cpp
 )
 
 add_library(
