@@ -1,4 +1,5 @@
 #include <filesystem>
+#include <string_view>
 #include "gtest/gtest.h"
 
 #include "mtgo_utils/gamelog.h"
@@ -61,13 +62,19 @@ TEST_F(GameLogPathTest, FindMTGORootEasy) // NOLINT
 
 TEST_F(GameLogPathTest, FindMTGORootLowercaseUsers) // NOLINT
 {
-    std::filesystem::path const target{GameLogPathTest::GetRootDir() /
-                                       "users/Dummy/AppData/Local/Apps/2.0"};
+    using namespace std::string_view_literals;
+    std::string_view lower_case{"users"sv};
+    std::string_view upper_case{"Users"sv};
+    std::string_view install_path{"Dummy/AppData/Local/Apps/2.0"sv};
+    std::filesystem::path const target{GameLogPathTest::GetRootDir() / lower_case / install_path};
+    std::filesystem::path const alternative_target{GameLogPathTest::GetRootDir() / upper_case / install_path};
+
+    // On Linux this will create "users", on Windows "Users".
     std::filesystem::create_directories(target);
 
     auto res = mtgo_utils::FindMTGORoot(GameLogPathTest::GetRootDir());
     ASSERT_TRUE(res.has_value());
-    ASSERT_EQ(res.value(), target);
+    ASSERT_TRUE((res.value() == target) || (res.value() == alternative_target));
 }
 
 
